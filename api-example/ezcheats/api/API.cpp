@@ -42,6 +42,15 @@ string ezcheats::API::request(RequestType type, const string& host,
                                                : cpr::Post(cpr::Url { host + body },
                                                    cpr::Body { data },
                                                    cpr::Header { { "Content-Type", "application/json" } });
+    if (r.status_code == 0) {
+        m_lastErrorMessage = r.error.message;
+        throw std::runtime_error("Failed to connect");
+    }
+    else if (r.status_code != 200) {
+        m_lastErrorMessage = r.error.message;
+        throw std::runtime_error("Status code does not match a successful request");
+    }
+
     return r.text;
 }
 
@@ -97,4 +106,10 @@ string ezcheats::API::userTimeLeft()
     if (secretData == m_secret_data)
         return timeLeft;
     return "";
+}
+
+
+string ezcheats::API::lastError()
+{
+    return m_lastErrorMessage;
 }

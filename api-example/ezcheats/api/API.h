@@ -25,6 +25,7 @@ public:
     unsigned int onlineCount();
     void updateOnline();
     std::string userTimeLeft();
+    std::string lastError();
 
 private:
     // unique private cheat ID
@@ -33,7 +34,7 @@ private:
     std::string m_secret_data;
     // URL to send API requests to
     std::string m_apiUrl;
-
+    std::string m_lastErrorMessage = "";
     //  Sending a request to the server, returns a response
     std::string request(RequestType type, const std::string& host,
         const std::string& body, const std::string& data);
