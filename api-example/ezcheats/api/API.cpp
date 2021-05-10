@@ -8,6 +8,8 @@ using namespace std;
 * \param apiUrl - URL of the Private Cheat Server API
 * \param cheatId - Private Cheat ID
 * \param userSecretData - the user's secret key, for example, HWID
+* 
+* \throw Invalid URL format
 */
 ezcheats::API::API(string apiUrl, string cheatId, string userSecretData)
     : m_id(cheatId)
@@ -17,7 +19,7 @@ ezcheats::API::API(string apiUrl, string cheatId, string userSecretData)
         "(?:(?:https?):\/\/)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])");
 
     if (!regex_match(apiUrl, regexPattern)) {
-        throw std::exception("Invalid URL format");
+        throw std::invalid_argument("Invalid URL format");
     }
 
     m_apiUrl = apiUrl;
